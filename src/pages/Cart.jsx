@@ -30,7 +30,7 @@ function Cart() {
     dispatch(minusCartItem(id));
   };
 
-  const onClickOrder =(name) => {
+  const onClickOrder =() => {
     console.log('Ваш заказ', items);
   };
   

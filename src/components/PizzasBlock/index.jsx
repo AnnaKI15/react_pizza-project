@@ -1,18 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Button from '../Button';
+import Button from '../Button'; 
+import { Notyf } from 'notyf';
+import 'notyf/notyf.min.css';
 
 
-function PizzaBlock({id, name, imageUrl, price, types, sizes, onClickAddPizza, addedCount }) {
+function PizzaBlock({id, name, imageUrl, price, types, sizes, onClickAddPizza, addedCount  }) {
   const aviableTypes = ['тонкое', 'традиционное' ];
   const aviableSizes = [26, 30, 40 ];
   const [activeType, setActiveType] = React.useState(types[0]);
   const [activeSizes, setActiveSizes] = React.useState(0);
-
+  const notyf = new Notyf({
+   position: {x:'left',y:'bottom'}
+  });
   
-  const onSelectType = (index) => { setActiveType(index);}
-  const onSelectSizes = (index) => {setActiveSizes(index);}
+  const onSelectType = (index) => { setActiveType(index)};
+  const onSelectSizes = (index) => {setActiveSizes(index)};
   const onAddPizza = () => {
     const obj = {
       id,
@@ -22,7 +26,14 @@ function PizzaBlock({id, name, imageUrl, price, types, sizes, onClickAddPizza, a
       size: aviableSizes[activeSizes],
       type: aviableTypes[activeType]
     };
+    
     onClickAddPizza(obj)};
+    const notify = ()=> notyf.success('Добавлено');
+    const handelClick = ()=> {
+      notify();
+      onAddPizza();
+    }
+
     return (
         <div className="pizza-block">
               <img
@@ -62,7 +73,7 @@ function PizzaBlock({id, name, imageUrl, price, types, sizes, onClickAddPizza, a
               </div>
               <div className="pizza-block__bottom">
                 <div className="pizza-block__price">от {price} ₽</div>
-              <Button onClick = {onAddPizza} className="button--add" outline>
+              <Button onClick ={handelClick} className="button--add" outline>
                   <svg
                     width="12"
                     height="12"
